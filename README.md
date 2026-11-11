@@ -19,3 +19,5 @@ Sistema PWA desenvolvido para a **ACP Plásticos** com o objetivo de integrar a 
 ```bash
 pip install -r requirements.txt
 pytest
+
+<!-- Revisão de PR -->
