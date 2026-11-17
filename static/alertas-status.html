@@ -3,49 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexaVarejo — Alertas</title>
+    <title>NexaVarejo — Alertas e Status de Produção</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body.alto-contraste,
+        body.alto-contraste div {
+            background-color: #000000 !important;
+            color: #FFFF00 !important;
+            border-color: #FFFF00 !important;
+        }
+        body.alto-contraste a,
+        body.alto-contraste button.btn-acao {
+            background-color: #FFFF00 !important;
+            color: #000000 !important;
+            border: 2px solid #FFFFFF !important;
+            font-weight: 900 !important;
+        }
+        body.alto-contraste .alerta-critico {
+            color: #00FFFF !important;
+        }
+        body.fonte-grande .texto-dinamico {
+            font-size: 1.05rem !important;
+            line-height: 1.4 !important;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex justify-center p-2">
+<body class="bg-gray-100 min-h-screen flex justify-center p-2 transition-colors">
     <div class="bg-white p-4 rounded-2xl shadow-lg w-full max-w-[360px] border border-gray-200 min-h-screen">
-        <!-- Banner de Conexão Offline -->
-        <div class="bg-amber-50 border border-amber-300 p-2.5 rounded-xl flex items-center space-x-2 text-xs font-bold text-amber-800 mb-4">
-            <span>◆ Sincronizando offline (2 ações salvas)</span>
+        
+        <!-- Barra de Acessibilidade -->
+        <div class="flex gap-2 mb-3 pb-2 border-b border-gray-200" role="region" aria-label="Controles de Acessibilidade">
+            <button onclick="alternarContraste()" class="btn-acao flex-1 bg-slate-900 text-white text-xs font-bold py-2 px-2 rounded-lg cursor-pointer">
+                🌓 Alto Contraste
+            </button>
+            <button onclick="alternarFonte()" class="btn-acao flex-1 bg-slate-200 text-slate-900 text-xs font-bold py-2 px-2 rounded-lg cursor-pointer">
+                🔍 Fonte (A+)
+            </button>
         </div>
 
-        <h1 class="text-lg font-bold text-gray-900 mb-3">Alertas de estoque</h1>
+        <!-- Cabeçalho -->
+        <div class="flex items-center justify-between mb-4">
+            <a href="estoque-kanban.html" class="text-xs font-bold text-blue-700 px-2.5 py-1.5 rounded-lg bg-blue-50">← Voltar</a>
+            <h1 class="text-base font-bold text-gray-900">Alertas & Status</h1>
+            <span class="w-10"></span>
+        </div>
 
-        <!-- Alerta Crítico (Triângulo + Vermelho) -->
-        <div class="bg-red-50/40 border-2 border-red-500 p-3 rounded-xl mb-3">
-            <div class="flex space-x-2">
-                <span class="text-red-600 font-bold text-lg">▲</span>
-                <div>
-                    <h2 class="text-xs font-bold text-gray-900">PLAST-PP-004 · Polipropileno Injetável</h2>
-                    <p class="text-[11px] font-bold text-red-700">Abaixo do Ponto de Reserva</p>
-                    <p class="text-[10px] text-gray-600 mt-1">Saldo: 80 kg · Ponto de reserva: 150 kg</p>
+        <!-- Ordem Iniciada -->
+        <div class="bg-emerald-50 border-2 border-emerald-200 p-3 rounded-xl mb-4">
+            <span class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded font-bold">● EM PRODUÇÃO</span>
+            <h2 class="texto-dinamico font-bold text-sm text-gray-900 mt-1">#OP-2026-88 · Baldes 20L</h2>
+            <p class="texto-dinamico text-xs text-gray-700 mt-0.5">Injetora 02 · Consumo previsto: 240 kg PEAD</p>
+        </div>
+
+        <!-- Alertas de Reposição -->
+        <h2 class="text-[11px] font-bold text-gray-600 tracking-wider mb-2">ALERTAS CRÍTICOS DE ESTOQUE (2)</h2>
+        
+        <div class="space-y-3 mb-6">
+            <div class="border-2 border-red-200 bg-red-50/50 p-3 rounded-xl">
+                <div class="flex justify-between items-center">
+                    <span class="alerta-critico text-xs font-bold text-red-700">⚠️ Estoque Mínimo Atingido</span>
+                    <span class="text-[10px] font-bold bg-red-100 text-red-800 px-2 py-0.5 rounded">Urgente</span>
                 </div>
+                <p class="texto-dinamico text-xs font-bold text-gray-900 mt-1">PLAST-PP-004 · PP Injetável</p>
+                <p class="texto-dinamico text-xs text-gray-600">Saldo atual: 80 kg (Mínimo: 200 kg)</p>
+            </div>
+
+            <div class="border-2 border-amber-200 bg-amber-50/50 p-3 rounded-xl">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-amber-800">🔔 Ponto de Pedido</span>
+                    <span class="text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded">Atenção</span>
+                </div>
+                <p class="texto-dinamico text-xs font-bold text-gray-900 mt-1">PIG-AZUL-02 · Masterbatch Azul</p>
+                <p class="texto-dinamico text-xs text-gray-600">Saldo atual: 45 kg (Mínimo: 50 kg)</p>
             </div>
         </div>
 
-        <!-- Alerta Atenção (Círculo + Amarelo) -->
-        <div class="bg-amber-50/40 border-2 border-amber-400 p-3 rounded-xl mb-6">
-            <div class="flex space-x-2">
-                <span class="text-amber-600 font-bold text-lg">●</span>
-                <div>
-                    <h2 class="text-xs font-bold text-gray-900">PLAST-PVC-010 · PVC</h2>
-                    <p class="text-[11px] font-bold text-amber-700">Perto do Ponto de Reserva</p>
-                    <p class="text-[10px] text-gray-600 mt-1">Saldo: 640 kg · Ponto de reserva: 500 kg</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Botões de Ação -->
-        <button class="w-full bg-blue-700 text-white font-bold py-3 rounded-xl text-sm min-h-[44px] mb-2">
-            Confirmar baixa de estoque
-        </button>
-        <button class="w-full bg-white border-2 border-blue-700 text-blue-700 font-bold py-3 rounded-xl text-sm min-h-[44px]">
-            Sincronizar agora
-        </button>
+        <a href="login.html" class="block text-center w-full bg-slate-800 text-white font-bold py-3 rounded-xl text-xs min-h-[44px]">
+            Encerrar Turno Operacional
+        </a>
     </div>
+
+    <script>
+        if (localStorage.getItem('altoContraste') === 'true') document.body.classList.add('alto-contraste');
+        if (localStorage.getItem('fonteGrande') === 'true') document.body.classList.add('fonte-grande');
+
+        function alternarContraste() {
+            document.body.classList.toggle('alto-contraste');
+            localStorage.setItem('altoContraste', document.body.classList.contains('alto-contraste'));
+        }
+        function alternarFonte() {
+            document.body.classList.toggle('fonte-grande');
+            localStorage.setItem('fonteGrande', document.body.classList.contains('fonte-grande'));
+        }
+    </script>
 </body>
 </html>
