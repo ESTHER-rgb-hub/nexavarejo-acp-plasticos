@@ -1,11 +1,9 @@
 from fastapi import FastAPI, HTTPException, status
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from pydantic import BaseModel, EmailStr
 
 app = FastAPI(title="NexaVarejo API", version="1.0.0")
 
-# Disponibiliza todas as telas HTML da pasta static
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 class UserLogin(BaseModel):
@@ -14,10 +12,6 @@ class UserLogin(BaseModel):
 
 @app.get("/")
 def read_root():
-    return FileResponse("static/login.html")
-
-@app.get("/api/health")
-def health_check():
     return {"status": "online", "sistema": "NexaVarejo - ACP Plásticos"}
 
 @app.post("/login")
